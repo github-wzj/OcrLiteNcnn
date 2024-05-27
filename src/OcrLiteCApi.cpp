@@ -3,6 +3,8 @@
 #include "OcrLiteCApi.h"
 #include "OcrLite.h"
 
+#include "windows.h"
+
 extern "C"
 {
 typedef struct {
