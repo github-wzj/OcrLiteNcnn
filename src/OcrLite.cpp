@@ -66,19 +66,6 @@ void OcrLite::Logger(const char *format, ...) {
     free(buffer);
 }
 
-bool hBitMapToMat(HBITMAP& _hBmp,cv::Mat& _mat)
-{
-    BITMAP bmp;    
-    GetObject( _hBmp, sizeof(BITMAP), &bmp );    
-    int nChannels = bmp.bmBitsPixel == 1 ? 1 : bmp.bmBitsPixel/8 ;   
-    int depth = bmp.bmBitsPixel == 1 ? IPL_DEPTH_1U : IPL_DEPTH_8U;    
-    cv::Mat v_mat;
-    v_mat.create( cvSize( bmp.bmWidth,bmp.bmHeight), CV_MAKETYPE(CV_8U, nChannels) );
-    GetBitmapBits( _hBmp, bmp.bmHeight*bmp.bmWidth*nChannels, v_mat.data );  
-    _mat = v_mat;
-    return TRUE;   
-}
-
 cv::Mat makePadding(cv::Mat &src, const int padding) {
     if (padding <= 0) return src;
     cv::Scalar paddingScalar = {255, 255, 255};
