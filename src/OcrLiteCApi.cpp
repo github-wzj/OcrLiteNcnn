@@ -39,6 +39,48 @@ OcrInit(const char *szDetModel, const char *szClsModel, const char *szRecModel, 
     }
 
 }
+//bitmap参数
+_QM_OCR_API OCR_BOOL
+OcrDetect(OCR_HANDLE handle, HBITMAP& _hBmp, OCR_PARAM *pParam) {
+
+    OCR_OBJ *pOcrObj = (OCR_OBJ *) handle;
+    if (!pOcrObj)
+        return FALSE;
+
+    OCR_PARAM Param = *pParam;
+    if (Param.padding == 0)
+        Param.padding = 50;
+
+    if (Param.maxSideLen == 0)
+        Param.maxSideLen = 1024;
+
+    if (Param.boxScoreThresh == 0)
+        Param.boxScoreThresh = 0.6;
+
+    if (Param.boxThresh == 0)
+        Param.boxThresh = 0.3f;
+
+    if (Param.unClipRatio == 0)
+        Param.unClipRatio = 2.0;
+
+    if (Param.doAngle == 0)
+        Param.doAngle = 1;
+
+    if (Param.mostAngle == 0)
+        Param.mostAngle = 1;
+   Mat my_mat;
+   hBitMapToMat(_hBmp, my_mat) 
+    
+    OcrResult result = pOcrObj->OcrObjdetect(my_mat, Param.padding, Param.maxSideLen,
+                                              Param.boxScoreThresh, Param.boxThresh, Param.unClipRatio,
+                                              Param.doAngle != 0, Param.mostAngle != 0);
+   
+    if (result.strRes.length() > 0) {
+        pOcrObj->strRes = result.strRes;
+        return TRUE;
+    } else
+        return FALSE;
+}
 
 _QM_OCR_API OCR_BOOL
 OcrDetect(OCR_HANDLE handle, const char *imgPath, const char *imgName, OCR_PARAM *pParam) {
