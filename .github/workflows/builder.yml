@@ -8,7 +8,7 @@ on:
 
 jobs:
   ubuntu1804:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
 
     env:
       NCNN_VERSION: 20221128
