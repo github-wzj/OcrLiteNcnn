@@ -19,7 +19,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout @master
+      - uses: actions/checkout@v3
 
       # 安装vulkan
       - name: vulkansdk
@@ -78,19 +78,19 @@ jobs:
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: linux-bin
           path: linux-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: linux-jni
           path: linux-jni.7z
 
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: linux-clib
           path: linux-clib.7z
@@ -107,7 +107,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout @master
+      - uses: actions/checkout@v3
 
       # 安装openmp
       - name: install openmp
@@ -170,19 +170,19 @@ jobs:
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: macos-bin
           path: macos-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: macos-jni
           path: macos-jni.7z
 
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: macos-clib
           path: macos-clib.7z
@@ -199,7 +199,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout @master
+      - uses: actions/checkout@v3
 
       # 安装vulkan
       - name: vulkansdk
@@ -254,30 +254,30 @@ jobs:
           mv win-JNI-GPU-Win32/install windows-jni/win-JNI-GPU-Win32
           7z a windows-jni.7z windows-jni
           mkdir windows-clib
-          # mv win-CLIB-CPU-x64/install windows-clib/win-CLIB-CPU-x64
-          # mv win-CLIB-CPU-Win32/install windows-clib/win-CLIB-CPU-Win32
-          # mv win-CLIB-GPU-x64/install windows-clib/win-CLIB-GPU-x64
-          # mv win-CLIB-GPU-Win32/install windows-clib/win-CLIB-GPU-Win32
-          # 7z a windows-clib.7z windows-clib
+          mv win-CLIB-CPU-x64/install windows-clib/win-CLIB-CPU-x64
+          mv win-CLIB-CPU-Win32/install windows-clib/win-CLIB-CPU-Win32
+          mv win-CLIB-GPU-x64/install windows-clib/win-CLIB-GPU-x64
+          mv win-CLIB-GPU-Win32/install windows-clib/win-CLIB-GPU-Win32
+          7z a windows-clib.7z windows-clib
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: windows-bin
           path: windows-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact @master
+        uses: actions/upload-artifact@v3
         with:
           name: windows-jni
           path: windows-jni.7z
 
-      #- name: upload
-      #  uses: actions/upload-artifact @master
-      #  with:
-      #    name: windows-clib
-      #    path: windows-clib.7z
+      - name: upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-clib
+          path: windows-clib.7z
 
   release:
     needs: [ ubuntu1804, macos1015, windows-vs2019 ]
@@ -286,7 +286,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout @master
+      - uses: actions/checkout@v3
 
       # 获取所有的git log和tag
       - name: Unshallow
@@ -317,7 +317,7 @@ jobs:
 
       # 下载artifact
       - name: download
-        uses: actions/download-artifact @master
+        uses: actions/download-artifact@v3
         with:
           path: artifacts
 
