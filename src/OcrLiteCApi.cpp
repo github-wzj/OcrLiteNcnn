@@ -10,6 +10,19 @@ typedef struct {
     std::string strRes;
 } OCR_OBJ;
 
+bool hBitMapToMat(HBITMAP& _hBmp,Mat& _mat)
+{
+    BITMAP bmp;    
+    GetObject( _hBmp, sizeof(BITMAP), &bmp );    
+    int nChannels = bmp.bmBitsPixel == 1 ? 1 : bmp.bmBitsPixel/8 ;   
+    int depth = bmp.bmBitsPixel == 1 ? IPL_DEPTH_1U : IPL_DEPTH_8U;    
+    Mat v_mat;
+    v_mat.create( cvSize( bmp.bmWidth,bmp.bmHeight), CV_MAKETYPE(CV_8U, nChannels) );
+    GetBitmapBits( _hBmp, bmp.bmHeight*bmp.bmWidth*nChannels, v_mat.data );  
+    _mat = v_mat;
+    return TRUE;   
+}
+
 _QM_OCR_API OCR_HANDLE
 OcrInit(const char *szDetModel, const char *szClsModel, const char *szRecModel, const char *szKeyPath, int nThreads,
         int gpuIndex) {
