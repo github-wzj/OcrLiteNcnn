@@ -7,7 +7,6 @@ on:
       - '*'
 
 jobs:
-
   ubuntu1804:
     runs-on: ubuntu-18.04
 
@@ -20,7 +19,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout@v3
+      - uses: actions/checkout @master
 
       # 安装vulkan
       - name: vulkansdk
@@ -79,107 +78,19 @@ jobs:
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: linux-bin
           path: linux-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: linux-jni
           path: linux-jni.7z
 
       - name: upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-clib
-          path: linux-clib.7z
-
- ubuntu1804:
-    runs-on: ubuntu-18.04
-
-    env:
-      NCNN_VERSION: 20221128
-      CPU_PKG_NAME: ncnn-20221128-ubuntu1804
-      GPU_PKG_NAME: ncnn-20221128-ubuntu1804-vulkan
-      CV_VERSION: 4.6.0
-      CV_PKG_NAME: opencv-4.6.0-ubuntu1804
-
-    steps:
-      # 检出代码
-      - uses: actions/checkout@v3
-
-      # 安装vulkan
-      - name: vulkansdk
-        run: |
-          wget https://sdk.lunarg.com/sdk/download/1.3.236.0/linux/vulkansdk-linux-x86_64-1.3.236.0.tar.gz?Human=true -O vulkansdk-linux-x86_64-1.3.236.0.tar.gz
-          tar -xf vulkansdk-linux-x86_64-1.3.236.0.tar.gz
-          rm -rf 1.3.236.0/source 1.3.236.0/samples
-          find 1.3.236.0 -type f | grep -v -E 'vulkan|glslang' | xargs rm
-
-      # 下载ncnn-static
-      - name: download ncnn-static
-        run: |
-          cd ncnn-static
-          wget https://github.com/benjaminwan/NcnnBuilder/releases/download/${{ env.NCNN_VERSION }}/${{ env.CPU_PKG_NAME }}.7z -O ${{ env.CPU_PKG_NAME }}.7z
-          7z x ${{ env.CPU_PKG_NAME }}.7z -aoa
-
-      # 下载ncnn-vulkan-static
-      - name: download ncnn-vulkan-static
-        run: |
-          cd ncnn-vulkan-static
-          wget https://github.com/benjaminwan/NcnnBuilder/releases/download/${{ env.NCNN_VERSION }}/${{ env.GPU_PKG_NAME }}.7z -O ${{ env.GPU_PKG_NAME }}.7z
-          7z x ${{ env.GPU_PKG_NAME }}.7z -aoa
-
-      # 下载opencv-static
-      - name: download opencv-static
-        run: |
-          cd opencv-static
-          wget https://github.com/RapidAI/OpenCVBuilder/releases/download/${{ env.CV_VERSION }}/${{ env.CV_PKG_NAME }}.7z -O ${{ env.CV_PKG_NAME }}.7z
-          7z x ${{ env.CV_PKG_NAME }}.7z -aoa
-
-      # 编译
-      - name: build
-        run: |
-          export VULKAN_SDK=`pwd`/1.3.236.0/x86_64
-          export PATH=`pwd`/1.3.236.0/x86_64/bin:$PATH
-          chmod a+x build-default.sh &&./build-default.sh
-
-      # 使用7z压缩
-      - name: 7zip
-        run: |
-          mkdir linux-bin
-          cp run-benchmark.sh linux-bin/run-benchmark.sh
-          cp run-test.sh linux-bin/run-test.sh
-          cp -r images linux-bin/images
-          mv Linux-BIN-CPU/install/bin linux-bin/Linux-BIN-CPU
-          mv Linux-BIN-GPU/install/bin linux-bin/Linux-BIN-GPU
-          7z a linux-bin.7z linux-bin
-          mkdir linux-jni
-          mv Linux-JNI-CPU/install linux-jni/Linux-JNI-CPU
-          mv Linux-JNI-GPU/install linux-jni/Linux-JNI-GPU
-          7z a linux-jni.7z linux-jni
-          mkdir linux-clib
-          mv Linux-CLIB-CPU/install linux-clib/Linux-CLIB-CPU
-          mv Linux-CLIB-GPU/install linux-clib/Linux-CLIB-GPU
-          7z a linux-clib.7z linux-clib
-
-      # 上传artifact
-      - name: upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-bin
-          path: linux-bin.7z
-
-      - name: upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-jni
-          path: linux-jni.7z
-
-      - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: linux-clib
           path: linux-clib.7z
@@ -196,7 +107,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout@v3
+      - uses: actions/checkout @master
 
       # 安装openmp
       - name: install openmp
@@ -259,23 +170,22 @@ jobs:
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: macos-bin
           path: macos-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: macos-jni
           path: macos-jni.7z
 
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: macos-clib
           path: macos-clib.7z
-          
 
   windows-vs2019:
     runs-on: windows-2019
@@ -289,7 +199,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout@v3
+      - uses: actions/checkout @master
 
       # 安装vulkan
       - name: vulkansdk
@@ -352,19 +262,19 @@ jobs:
 
       # 上传artifact
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: windows-bin
           path: windows-bin.7z
 
       - name: upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact @master
         with:
           name: windows-jni
           path: windows-jni.7z
 
       #- name: upload
-      #  uses: actions/upload-artifact@v3
+      #  uses: actions/upload-artifact @master
       #  with:
       #    name: windows-clib
       #    path: windows-clib.7z
@@ -376,7 +286,7 @@ jobs:
 
     steps:
       # 检出代码
-      - uses: actions/checkout@v3
+      - uses: actions/checkout @master
 
       # 获取所有的git log和tag
       - name: Unshallow
@@ -407,7 +317,7 @@ jobs:
 
       # 下载artifact
       - name: download
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact @master
         with:
           path: artifacts
 
